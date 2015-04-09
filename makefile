@@ -1,20 +1,20 @@
-run: shell
-	./shell.exe
+run: hello
+	./hello.exe
 
-shell: lex.yy.c y.tab.c main.c
-	gcc lex.yy.c y.tab.c main.c linked_list.c -o shell.exe
+hello: lex.yy.c y.tab.c main.c
+	gcc lex.yy.c y.tab.c main.c linkedList.c -o hello.exe
 
-y.tab.c: shell.y
-	bison -dy shell.y
+y.tab.c: hello.y
+	bison -dy hello.y
 
-lex.yy.c: shell.lex 
-	flex shell.lex
+lex.yy.c: hello.lex
+	flex hello.lex
+
+linkedList.c: linkedList.c
+	gcc	linkedList.c
 
 main.c: main.c
 	gcc main.c
 
-linked_list.c: linked_list.c
-	gcc	linked_list.c
-
 clean:
-	rm shell.exe mainc.o linked_list.o
+	rm hello.exe 

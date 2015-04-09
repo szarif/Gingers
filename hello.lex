@@ -1,13 +1,26 @@
-%{include <stdio.h>
-#include "y.tab.h"
+%{
+	#include <stdio.h>
+  #include <string.h>
+	#include "y.tab.h"
 %}
-%%
-
-[0-9]+		return NUMBER;
-hello		return HELLO;
-bye			return BYE;
-on|off		return STATE;
-setenv 		return SETENV;
-\n 			/* ignore end of line */;
 
 %%
+alias					return ALIAS;
+bye 					return BYE;
+cd 						return CD;
+hello 					return HELLO;
+ls 						return LS;
+[0-9]+					return NUMBER;
+printenv 				return PRINTENV;
+setenv 					return SETENV;
+on|off					return STATE;
+unalias 				return UNALIAS;
+unsetenv 				return UNSETENV;
+[0-9a-zA-Z/:.~\-?*]+  {yylval.str = strdup(yytext); 
+                      return WORD; }
+[0-9a-zA-Z/:.~\-?*]+  return VARIABLE; 
+\n 			return -1;
+%%
+
+
+// [0-9a-zA-Z/:.~\-?*]+	{ yylval.str = strdup(yytext); return VARIABLE; }
