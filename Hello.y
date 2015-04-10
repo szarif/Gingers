@@ -49,34 +49,40 @@ command:
 
 
 alias_case:
-	ALIAS{
-		printf("\t Alias has been called \n");
+	ALIAS WORD WORD{
+		command = 5;
+		variable = $2;
+		word = $3;
+	};
+	| ALIAS{
+		command = 6;
+		printf("\tAlias has been called \n");
 	};
 
 bye_case:
 	BYE{
 		command = 4;
-		printf("\t toodles darlin \n");
+		printf("\tToodles darlin \n");
 	};
 
 cd_case:
 	CD{
 		chdir(getenv("HOME"));
-		printf("\t Welcome home darlin! \n");
+		printf("\tWelcome home darlin! \n");
 	};
 	| CD WORD {
 		chdir($2);
-		printf("\t CD has been called and you have been redirected to the specified directory\n");
+		printf("\tCD has been called and you have been redirected to the specified directory\n");
 	};
 
 hello_case:
 	HELLO{	
-		printf("\t ello poppet! \n");
+		printf("\tHowdy yall!! \n");
 	};
 
 ls_case:
 	LS{
-		printf("\t I reckon yall wanna list of yall directory \n");
+		printf("\tI reckon yall wanna list of yall directory \n");
 		DIR *directory;
 		struct dirent *dir;
 		directory = opendir(".");
@@ -119,7 +125,7 @@ ls_case:
 printenv_case:
 	PRINTENV{
 		command = 2;
-		printf("\t Printenv has been called ");
+		printf("\tPrintenv has been called ");
 	};
 
 setenv_case:
@@ -140,21 +146,19 @@ arguments:
 
 	WORD
 	{
-		printf("\t word\n");
+		printf("\tword\n");
 	};
-
-	
-
-
 
 state_number_case:
 	STATE NUMBER{
-		printf("\t a state with number received \n");
+		printf("\tA state with number received \n");
 	};
 
 unalias_case:
-	UNALIAS{
-		printf("\t Unalias has been called \n");
+	UNALIAS WORD{
+		command = 7;
+		variable = $2;
+		printf("\tUnalias has been called \n");
 	};
 
 unsetenv_case:
@@ -167,7 +171,7 @@ unsetenv_case:
 
 variable_case:
 	VARIABLE{
-		printf("\t Variable has been called \n");
+		printf("\tVariable has been called \n");
 	};
 
 %%

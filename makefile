@@ -1,8 +1,8 @@
 run: hello
-	./hello.exe
+	./shell.exe
 
 hello: lex.yy.c y.tab.c main.c
-	gcc lex.yy.c y.tab.c main.c linkedList.c -o hello.exe
+	gcc lex.yy.c y.tab.c main.c linkedList.c -o shell.exe
 
 y.tab.c: hello.y
 	bison -dy hello.y
@@ -17,4 +17,4 @@ main.c: main.c
 	gcc main.c
 
 clean:
-	rm hello.exe 
+	rm shell.exe 
