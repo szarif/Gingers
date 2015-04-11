@@ -33,10 +33,12 @@ int yywrap(){
 	char* str;
 	int num;
 }
-%token ALIAS BYE CD HELLO LS NUMBER PRINTENV SETENV STATE UNALIAS UNSETENV 
+%token ALIAS BYE CD HELLO LS NUMBER PRINTENV SETENV STATE UNALIAS UNSETENV QUOTE EXPRESSION
 %token <str> VARIABLE
 %token <str> WORD
-%token <str> STRING
+%token <str> EXPRESSION
+
+
 %%
 
 commands: /*empty*/
@@ -142,12 +144,36 @@ setenv_case:
 		// ++commandIndex;
 	};
 
+	| SETENV WORD EXPRESSION{
+		command = 1;
+
+		variable = $2;
+		word = $3;
+	};
+
 arguments:	
 
 	WORD
 	{
 		printf("\tword\n");
 	};
+
+
+	| QUOTE {
+		printf("\t QUOTE ");
+	}; 
+	// | EXPRESSION {
+	// 	// const char* curr = $2;
+	// 	// strcat(word, " ");
+	// 	// strcat(word, curr);
+
+	// 	printf("\t spp hih ");
+	// };
+
+	
+
+
+
 
 state_number_case:
 	STATE NUMBER{

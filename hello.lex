@@ -18,7 +18,8 @@ unalias 				return UNALIAS;
 unsetenv 				return UNSETENV;
 [0-9a-zA-Z/:.~\-?*]+  {yylval.str = strdup(yytext); 
                       return WORD; }
-[0-9a-zA-Z/:.~\-?*]+  return VARIABLE; 
+\".*\"                {yylval.str = strdup(yytext); 
+                      return EXPRESSION; }
 \n 			return -1;
 %%
 
