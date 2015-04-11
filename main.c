@@ -16,6 +16,7 @@ extern int command;
 extern char** environ;
 extern char* variable;
 extern char* word;
+extern char* aliasCommand;
 
 //Alias stuff
 #define MAX_NO_ALIASES 10
@@ -39,7 +40,9 @@ void shellInit(){
 	//iniitalize shell duhhh
 	printf( "\n\t********** Shell Project Initalized **********\n\n\t********* Country Accent Initialized *********\n" );
 	//make a linked list to store
-	makeList();
+	//aliasCommand = NULL;
+	aliasCommand = " ";
+	number_of_aliases = 0;
 }
 
 
@@ -73,7 +76,8 @@ int setalias(char *name, char *value) {
 		}
 	
 
-	
+	}
+
 	if(index != -1) {
 		//if the variable already exists, change the value
 		array_of_aliases[i] = temp_alias;
@@ -87,6 +91,26 @@ int setalias(char *name, char *value) {
 		} else return -10;
 	}
 
+	
+}
+
+int isAlias(char* word) {
+	//Returns the index of the alias if the entered string is an alias. Otherwise returns -1
+
+	int indexOf = -1;
+
+	int i = 0;
+	//Find index of variable, if it exists
+	for(i = 0; i < number_of_aliases; i++) {
+		printf("dddowow\n");
+		if(strcmp(word, array_of_aliases[i].a_name) == 0) {
+			//Variable already exists, set value
+			indexOf = i;
+			break;
+		}
+	}
+
+	return indexOf;
 }
 
 void print_all_aliases(void) {
@@ -116,40 +140,72 @@ int removealias(char *name) {
 }
 
 void do_it() {
-	switch ( command ){
-		case 1:
-			setenv(variable,word, 1);
-			printf( "\tSETENV variable = %s, word = %s \n", variable, word);
-			break;
-		case 2:
-			printenv();
-			break;
-		case 3: 
-			unsetenv(variable);
-			break;
-		case 4:
-			printf( "\tTime to graduate, I'm OUT OF HERE! \n\nPRETTY PLEASE TAKE IT EASY ON US!\n\n" );
-			exit(0);
-			break;
-		case 5:
-			setalias(variable, word);
-			printf("\tRootin tootin! You set an alias: ");
-			printf(variable);
-			printf(" = ");
-			printf(word);
-			printf("!!!\n");
-			break;
-		case 6:
-			printf("\tWell shucks, 'eres a lista all them aliases fer ya!\n");
-			print_all_aliases();
-			break;
-		case 7:
-			printf("\tYall wanna get rid of that there alias? I gotcher!\n");
-			removealias(variable);
-			break;
-	};
-	printf("\n\n");
-	command = 0;
+	//if (aliasCommand == NULL) {
+
+				switch ( command ){
+				case 1:
+					//setenv
+					setenv(variable,word, 1);
+					printf( "\tSETENV variable = %s, word = %s \n", variable, word);
+					break;
+				case 2:
+					//print env
+					printenv();
+					break;
+				case 3: 
+					//unset env
+					unsetenv(variable);
+					break;
+				case 4:
+					//bye
+					printf( "\tTime to graduate, I'm OUT OF HERE! \n\nPRETTY PLEASE TAKE IT EASY ON US!\n\n" );
+					exit(0);
+					break;
+				case 5:
+					//set alias
+					setalias(variable, word);
+					printf("\tRootin tootin! You set an alias: ");
+					printf(variable);
+					printf(" = ");
+					printf(word);
+					printf("!!!\n");
+					break;
+				case 6:
+					//print alias
+					printf("\tWell shucks, 'eres a lista all them aliases fer ya!\n");
+					print_all_aliases();
+					break;
+				case 7:
+					//remove alias
+					printf("\tYall wanna get rid of that there alias? I gotcher!\n");
+					removealias(variable);
+					break;
+				case 8:
+					//command not found could be an alias or an error
+					command = 0;
+					printf("potential alias\n");
+					if (aliasCommand != " ") {
+						printf("alias\n");
+						int index = isAlias(aliasCommand);
+						if (index != -1) {
+							
+							parseString(array_of_aliases[index].a_data);
+							do_it();
+						} else {
+							printf("Not an alias - maybe an error? \n");
+						}
+					}
+				
+					
+					break;
+			};
+			printf("\n\n");
+			command = 0;
+
+	//} else {
+
+	//}
+	
 }
 
 int getCommand() {

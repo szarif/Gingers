@@ -12,11 +12,15 @@
 int command = -1;
 const char* commandsArray[50][2];
 
+char* expression;
+
 char* variable;
 char* word;
+char* aliasCommand;
 
 void yyerror(const char *str){
 	fprintf(stderr, "Psh, cmon.... error: %s\n", str);
+	//could be an error but could also be an alias
 
 }
 
@@ -33,11 +37,9 @@ int yywrap(){
 	char* str;
 	int num;
 }
-%token ALIAS BYE CD HELLO LS NUMBER PRINTENV SETENV STATE UNALIAS UNSETENV QUOTE EXPRESSION
-%token <str> VARIABLE
+%token ALIAS BYE CD HELLO LS NUMBER PRINTENV SETENV STATE UNALIAS UNSETENV QUOTE  
 %token <str> WORD
 %token <str> EXPRESSION
-
 
 %%
 
@@ -45,20 +47,94 @@ commands: /*empty*/
 	| commands command;
 
 command:
-	alias_case|bye_case|cd_case|hello_case|ls_case|printenv_case|setenv_case|arguments|state_number_case|unalias_case|unsetenv_case;
+	alias_case|bye_case|cd_case|hello_case|ls_case|printenv_case|setenv_case|state_number_case|unalias_case|unsetenv_case;
 
 	//|variable_case;
 
+setenv_case:
+
+	SETENV WORD arguments{
+		command = 1;
+
+		variable = $2;
+		word = expression;
+
+		// commandsArray[commandIndex][VARIABLEINDEX] = var;
+		// commandsArray[commandIndex][WORDINDEX] = word;
+
+		// ++commandIndex;
+	};
+
+	| SETENV WORD QUOTE arguments QUOTE{
+		command = 1;
+
+		variable = $2;
+		word = expression;
+	};
+
+arguments:	
+
+	PRINTENV {
+		expression = "printenv";
+	};
+
+	| CD {
+		expression = "cd";
+		printf("\t cd\n");
+	};
+
+	| LS {
+		expression = "ls";
+	};
+
+	| BYE {
+		expression = "bye";
+	};
+
+	| WORD {
+		//maybe word maybe alias
+		// if (aliasCommand == NULL) {
+		// 	aliasCommand = $1;
+		// 	command == 8;
+		// } else {
+		// 	printf("\tword\n");
+		// }
+			//aliasCommand = $1;
+			expression = $1;
+
+			printf("\t Word\n");
+		
+	};
+
+	| arguments WORD {
+		printf("\t dfdd\n");
+		const char* curr = $2;
+		strcat(expression, " ");
+		strcat(expression, curr);
+	};
 
 alias_case:
-	ALIAS WORD WORD{
+	ALIAS WORD PRINTENV{
 		command = 5;
 		variable = $2;
-		word = $3;
+		word = "printenv";
 	};
+	| ALIAS WORD LS{
+		command = 5;
+		variable = $2;
+		word = "ls";
+	};
+
 	| ALIAS{
 		command = 6;
 		printf("\tAlias has been called \n");
+	};
+
+	| ALIAS WORD QUOTE arguments QUOTE{
+
+		command = 5;
+		variable = $2;
+		word = expression;
 	};
 
 bye_case:
@@ -69,17 +145,34 @@ bye_case:
 
 cd_case:
 	CD{
-		chdir(getenv("HOME"));
-		printf("\tWelcome home darlin! \n");
+		// chdir(getenv("HOME"));
+		// printf("\tWelcome home darlin! \n");
 	};
 	| CD WORD {
-		chdir($2);
-		printf("\tCD has been called and you have been redirected to the specified directory\n");
+		// printf("ddsds\n");
+		// chdir($2);
+		// printf("\tCD has been called and you have been redirected to the specified directory\n");
 	};
 
 hello_case:
 	HELLO{	
 		printf("\tHowdy yall!! \n");
+	};
+
+	| WORD{
+		//maybe word maybe alias
+		// if (aliasCommand == NULL) {
+		// 	aliasCommand = $1;
+		// 	command == 8;
+		// } else {
+		// 	printf("\tword\n");
+		// }
+			//aliasCommand = $1;
+			
+			aliasCommand = $1;
+			printf("\t hi Word %s\n", aliasCommand);
+			command = 8;
+		
 	};
 
 ls_case:
@@ -130,47 +223,7 @@ printenv_case:
 		printf("\tPrintenv has been called ");
 	};
 
-setenv_case:
 
-	SETENV WORD WORD{
-		command = 1;
-
-		variable = $2;
-		word = $3;
-
-		// commandsArray[commandIndex][VARIABLEINDEX] = var;
-		// commandsArray[commandIndex][WORDINDEX] = word;
-
-		// ++commandIndex;
-	};
-
-	| SETENV WORD EXPRESSION{
-		command = 1;
-
-		variable = $2;
-		word = $3;
-	};
-
-arguments:	
-
-	WORD
-	{
-		printf("\tword\n");
-	};
-
-
-	| QUOTE {
-		printf("\t QUOTE ");
-	}; 
-	// | EXPRESSION {
-	// 	// const char* curr = $2;
-	// 	// strcat(word, " ");
-	// 	// strcat(word, curr);
-
-	// 	printf("\t spp hih ");
-	// };
-
-	
 
 
 
@@ -195,9 +248,15 @@ unsetenv_case:
 		// printf("\t Unsetenv has been called \n");
 	};
 
-variable_case:
-	VARIABLE{
-		printf("\tVariable has been called \n");
-	};
+
+// default_case:
+// 	ALIASCOMMAND {
+// 		if(aliasCommand == NULL) {
+// 			aliasCommand = $1;
+// 		} 
+
+// 		command = 8;
+
+// 	};
 
 %%

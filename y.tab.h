@@ -51,9 +51,8 @@
      UNALIAS = 267,
      UNSETENV = 268,
      QUOTE = 269,
-     EXPRESSION = 270,
-     VARIABLE = 271,
-     WORD = 272
+     WORD = 270,
+     EXPRESSION = 271
    };
 #endif
 /* Tokens.  */
@@ -69,22 +68,21 @@
 #define UNALIAS 267
 #define UNSETENV 268
 #define QUOTE 269
-#define EXPRESSION 270
-#define VARIABLE 271
-#define WORD 272
+#define WORD 270
+#define EXPRESSION 271
 
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 32 "hello.y"
+#line 36 "hello.y"
 {
 	char* str;
 	int num;
 }
 /* Line 1529 of yacc.c.  */
-#line 88 "y.tab.h"
+#line 86 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
