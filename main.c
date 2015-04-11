@@ -65,6 +65,8 @@ int setalias(char *name, char *value) {
 	int i = 0;
 
 		//compare the strings in the aliases array to the one passed in
+
+	for(i = 0; i < number_of_aliases; i++) {
 		if(strcmp(name, array_of_aliases[i].a_name) == 0) {
 			//Hey! this variable exists!
 			index = i;
