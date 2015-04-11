@@ -117,40 +117,45 @@ int removealias(char *name) {
 }
 
 void do_it() {
-	switch ( command ){
-		case 1:
-			setenv(variable,word, 1);
-			printf( "\tSETENV variable = %s, word = %s \n", variable, word);
-			break;
-		case 2:
-			printenv();
-			break;
-		case 3: 
-			unsetenv(variable);
-			break;
-		case 4:
-			printf( "\tTime to graduate, I'm OUT OF HERE! \n\nPRETTY PLEASE TAKE IT EASY ON US!\n\n" );
-			exit(0);
-			break;
-		case 5:
-			setalias(variable, word);
-			printf("\tRootin tootin! You set an alias: ");
-			printf(variable);
-			printf(" = ");
-			printf(word);
-			printf("!!!\n");
-			break;
-		case 6:
-			printf("\tWell shucks, 'eres a lista all them aliases fer ya!\n");
-			print_all_aliases();
-			break;
-		case 7:
-			printf("\tYall wanna get rid of that there alias? I gotcher!\n");
-			removealias(variable);
-			break;
-	};
+	if(command != 0){
+		switch ( command ){
+			case 1:
+				setenv(variable,word, 1);
+				printf( "\tSETENV variable = %s, word = %s \n", variable, word);
+				break;
+			case 2:
+				printenv();
+				break;
+			case 3: 
+				unsetenv(variable);
+				break;
+			case 4:
+				printf( "\tTime to graduate, I'm OUT OF HERE! \n\nPRETTY PLEASE TAKE IT EASY ON US!\n\n" );
+				exit(0);
+				break;
+			case 5:
+				setalias(variable, word);
+				printf("\tRootin tootin! You set an alias: ");
+				printf(variable);
+				printf(" = ");
+				printf(word);
+				printf("!!!\n");
+				break;
+			case 6:
+				printf("\tWell shucks, 'eres a lista all them aliases fer ya!\n");
+				print_all_aliases();
+				break;
+			case 7:
+				printf("\tYall wanna get rid of that there alias? I gotcher!\n");
+				removealias(variable);
+				break;
+		};
 	printf("\n\n");
 	command = 0;
+	} else {
+		
+	}
+
 }
 
 int getCommand() {
