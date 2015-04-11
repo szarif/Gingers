@@ -74,9 +74,8 @@ int setalias(char *name, char *value) {
 			//Hey! this variable exists!
 			index = i;
 		}
-	
-
 	}
+
 
 	if(index != -1) {
 		//if the variable already exists, change the value
@@ -140,6 +139,7 @@ int removealias(char *name) {
 }
 
 void do_it() {
+
 	//if (aliasCommand == NULL) {
 
 				switch ( command ){
