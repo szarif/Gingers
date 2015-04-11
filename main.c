@@ -71,7 +71,7 @@ int setalias(char *name, char *value) {
 			//Hey! this variable exists!
 			index = i;
 		}
-	
+	}
 
 	
 	if(index != -1) {
@@ -116,7 +116,6 @@ int removealias(char *name) {
 }
 
 void do_it() {
-	if(command != 0){
 		switch ( command ){
 			case 1:
 				setenv(variable,word, 1);
@@ -151,9 +150,7 @@ void do_it() {
 		};
 	printf("\n\n");
 	command = 0;
-	} else {
-		
-	}
+
 
 }
 
