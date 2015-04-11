@@ -50,9 +50,10 @@
      STATE = 266,
      UNALIAS = 267,
      UNSETENV = 268,
-     VARIABLE = 269,
-     WORD = 270,
-     STRING = 271
+     QUOTE = 269,
+     EXPRESSION = 270,
+     VARIABLE = 271,
+     WORD = 272
    };
 #endif
 /* Tokens.  */
@@ -67,9 +68,10 @@
 #define STATE 266
 #define UNALIAS 267
 #define UNSETENV 268
-#define VARIABLE 269
-#define WORD 270
-#define STRING 271
+#define QUOTE 269
+#define EXPRESSION 270
+#define VARIABLE 271
+#define WORD 272
 
 
 
@@ -82,7 +84,7 @@ typedef union YYSTYPE
 	int num;
 }
 /* Line 1529 of yacc.c.  */
-#line 86 "y.tab.h"
+#line 88 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

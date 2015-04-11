@@ -70,15 +70,14 @@ int setalias(char *name, char *value) {
 		if(strcmp(name, array_of_aliases[i].a_name) == 0) {
 			//Hey! this variable exists!
 			index = i;
-			break;
 		}
-	}
+	
 
 	
 	if(index != -1) {
 		//if the variable already exists, change the value
 		array_of_aliases[i] = temp_alias;
-		return OK;
+		return 1;
 	} else {
 		//If you havent reached your max alloted aliases, you can create a new one. 
 		if(number_of_aliases < MAX_NO_ALIASES) {
