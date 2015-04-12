@@ -14,8 +14,8 @@
 extern int command;
 //extern const char* commandsArray[50][2];
 extern char** environ;
-extern char* variable;
-extern char* word;
+extern const char* variable;
+extern const char* word;
 extern char* aliasCommand;
 extern char* expression;
 
@@ -29,8 +29,8 @@ int number_of_aliases;
 typedef struct alias alias;
 
 struct alias {
-	char *a_name;
-	char *a_data;
+	char a_name[50];
+	char a_data[50];
 };
 
 alias array_of_aliases[MAX_NO_ALIASES];
@@ -55,12 +55,13 @@ void printenv() {
 	}
 }
 
-int setalias(char *name, char *value) {
+int setalias(char* n, char* v) {
 	//initialize a temporary alias to later set
 	alias temp_alias;
 	//set the values of said alias
-	temp_alias.a_name = name;
-	temp_alias.a_data = value;
+	strcpy(temp_alias.a_name, n);
+	strcpy(temp_alias.a_data, v);
+
 
 	//we need an index so we can travese through the alias array
 	int index = -1;
@@ -71,8 +72,10 @@ int setalias(char *name, char *value) {
 		//compare the strings in the aliases array to the one passed in
 
 	for(i = 0; i < number_of_aliases; i++) {
-		if(strcmp(name, array_of_aliases[i].a_name) == 0) {
+		printf("name %s word %s\n",array_of_aliases[i].a_name,array_of_aliases[i].a_data);
+		if(strcmp(n, array_of_aliases[i].a_name) == 0) {
 			//Hey! this variable exists!
+			printf("shouldnt\n");
 			index = i;
 		}
 	}
@@ -80,11 +83,14 @@ int setalias(char *name, char *value) {
 
 	if(index != -1) {
 		//if the variable already exists, change the value
-		array_of_aliases[i] = temp_alias;
+		array_of_aliases[index] = temp_alias;
 		return 1;
 	} else {
 		//If you havent reached your max alloted aliases, you can create a new one. 
+		printf("should\n");
 		if(number_of_aliases < MAX_NO_ALIASES) {
+		printf("should1 %d\n",i);
+
 			array_of_aliases[i] = temp_alias;
 			number_of_aliases++;
 			return OK;
@@ -139,7 +145,7 @@ int removealias(char *name) {
 
 }
 
-void do_it() {
+void run() {
 
 	//if (aliasCommand == NULL) {
 
@@ -189,9 +195,9 @@ void do_it() {
 						printf("alias\n");
 						int index = isAlias(aliasCommand);
 						if (index != -1) {
-							
+
 							parseString(array_of_aliases[index].a_data);
-							do_it();
+							run();
 						} else {
 							printf("Not an alias - maybe an error? \n");
 						}
@@ -224,7 +230,7 @@ int getCommand() {
 void processCommand() {
 	// printf("\tprocessCommand()\n");
 	if( command ){
-		do_it();
+		run();
 	} else {
 		// execute_it();
 	}

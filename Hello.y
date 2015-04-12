@@ -159,6 +159,13 @@ alias_case:
 		word = expression;
 	};
 
+	| ALIAS WORD arguments{
+
+		command = 5;
+		variable = $2;
+		word = expression;
+	};
+
 bye_case:
 	BYE{
 		command = 4;
@@ -221,39 +228,40 @@ ls_case:
 	| LS WORD {
 
 			DIR *direct;
-
+			int works;
 			struct dirent *dir;
 			
 			direct = opendir(".");
 			
 			int isCorrect;
 			
-			const char* input = $2;
 			
-			int len = strlen(input);
+			int len;
 
 			char* output;
 			
-			if(direct) {
-			
-				while ((dir = readdir(direct)) != NULL) {
+			const char strIn[50];
+			const char strOut[50];
 
-					isCorrect = 1;
-					output = dir->d_name;
-					int i;
-					for (i = 0; i < len; i++) {
-						if (input[i] != output[i]) {
-							isCorrect = 0;
-							break;
-						}
+			strcpy(strIn,$2);
+			len = strlen(strIn);
+
+		if(direct) {
+			while ((dir = readdir(direct)) != NULL) {
+				works = 1;
+				strcpy(strOut,dir->d_name);
+				int i;
+				for (i = 0; i < len; i++) {
+					if (strIn[i] != strOut[i]) {
+						works = 0;
+						break;
 					}
-			
-					if (isCorrect == 1)
-						printf("%s\n", dir->d_name);
 				}
-			
-				closedir(direct);
+				if (works == 1)
+					printf("%s\n", dir->d_name);
 			}
+		 
+		}
 
 	};
 

@@ -22,7 +22,7 @@ unsetenv 				return UNSETENV;
 \{              return OCURL;
 \}              return ECURL;
 \"                return QUOTE;  
-[0-9a-zA-Z/\.]+  {yylval.str = strdup(yytext); 
+[0-9:~a-zA-Z/\.]+  {yylval.str = strdup(yytext); 
                       return WORD; }                
 \n 			return -1;
 %%
