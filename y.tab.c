@@ -486,8 +486,8 @@ static const yytype_uint16 yyrline[] =
        0,    46,    46,    47,    50,    50,    50,    50,    50,    50,
       50,    50,    50,    50,    50,    55,    62,    74,    87,    91,
       96,   100,   104,   109,   124,   131,   139,   144,   150,   155,
-     163,   169,   173,   180,   184,   201,   214,   242,   274,   307,
-     339,   376,   387,   392,   399
+     163,   169,   173,   180,   184,   201,   221,   260,   292,   325,
+     357,   394,   405,   410,   417
 };
 #endif
 
@@ -1592,7 +1592,7 @@ yyreduce:
   case 32:
 #line 173 "hello.y"
     {
-		printf("ddsds\n");
+
 		chdir((yyvsp[(2) - (2)].str));
 		printf("\tCD has been called and you have been redirected to the specified directory\n");
 	}
@@ -1628,52 +1628,70 @@ yyreduce:
 #line 201 "hello.y"
     {
 		printf("\tI reckon yall wanna list of yall directory \n");
+
 		DIR *directory;
-		struct dirent *dir;
+
+		struct dirent *direct;
+		
 		directory = opendir(".");
+		
 		if(directory) {
-			while ((dir = readdir(directory)) != NULL) {
-				printf("%s\n", dir->d_name);
+
+			while ((direct = readdir(directory)) != NULL) {
+				printf("%s\n", direct->d_name);
 			}
+			
 			closedir(directory);
+	
 		}
 
 	}
     break;
 
   case 36:
-#line 214 "hello.y"
+#line 221 "hello.y"
     {
 
-			DIR *d;
-			struct dirent *dir;
-			d = opendir(".");
-			int works;
-			const char* strIn = (yyvsp[(2) - (2)].str);
-			int len = strlen(strIn);
+			DIR *direct;
 
-			char* strOut;
-			if(d) {
-				while ((dir = readdir(d)) != NULL) {
-					works = 1;
-					strOut = dir->d_name;
+			struct dirent *dir;
+			
+			direct = opendir(".");
+			
+			int isCorrect;
+			
+			const char* input = (yyvsp[(2) - (2)].str);
+			
+			int len = strlen(input);
+
+			char* output;
+			
+			if(direct) {
+			
+				while ((dir = readdir(direct)) != NULL) {
+
+					isCorrect = 1;
+					output = dir->d_name;
 					int i;
 					for (i = 0; i < len; i++) {
-						if (strIn[i] != strOut[i]) {
-							works = 0;
+						if (input[i] != output[i]) {
+							isCorrect = 0;
 							break;
 						}
 					}
-					if (works == 1)
+			
+					if (isCorrect == 1)
 						printf("%s\n", dir->d_name);
 				}
-				closedir(d);
+			
+				closedir(direct);
 			}
+
 	}
     break;
 
   case 37:
-#line 242 "hello.y"
+#line 260 "hello.y"
     {
 		DIR *d;
 			struct dirent *dir;
@@ -1709,7 +1727,7 @@ yyreduce:
     break;
 
   case 38:
-#line 274 "hello.y"
+#line 292 "hello.y"
     {
 		DIR *d;
 			struct dirent *dir;
@@ -1746,7 +1764,7 @@ yyreduce:
     break;
 
   case 39:
-#line 307 "hello.y"
+#line 325 "hello.y"
     {
 	DIR *d;
 			struct dirent *dir;
@@ -1782,7 +1800,7 @@ yyreduce:
     break;
 
   case 40:
-#line 339 "hello.y"
+#line 357 "hello.y"
     {
 		DIR *d;
 			struct dirent *dir;
@@ -1821,7 +1839,7 @@ yyreduce:
     break;
 
   case 41:
-#line 376 "hello.y"
+#line 394 "hello.y"
     {
 		command = 2;
 		printf("\tPrintenv has been called ");
@@ -1829,14 +1847,14 @@ yyreduce:
     break;
 
   case 42:
-#line 387 "hello.y"
+#line 405 "hello.y"
     {
 		printf("\tA state with number received \n");
 	}
     break;
 
   case 43:
-#line 392 "hello.y"
+#line 410 "hello.y"
     {
 		command = 7;
 		variable = (yyvsp[(2) - (2)].str);
@@ -1845,7 +1863,7 @@ yyreduce:
     break;
 
   case 44:
-#line 399 "hello.y"
+#line 417 "hello.y"
     {
 		command = 3;
 		variable = (yyvsp[(2) - (2)].str);
@@ -1856,7 +1874,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 1860 "y.tab.c"
+#line 1878 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2070,5 +2088,5 @@ yyreturn:
 }
 
 
-#line 417 "hello.y"
+#line 435 "hello.y"
 
