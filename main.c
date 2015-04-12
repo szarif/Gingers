@@ -17,6 +17,7 @@ extern char** environ;
 extern char* variable;
 extern char* word;
 extern char* aliasCommand;
+extern char* expression;
 
 //Alias stuff
 #define MAX_NO_ALIASES 10
@@ -101,7 +102,7 @@ int isAlias(char* word) {
 	int i = 0;
 	//Find index of variable, if it exists
 	for(i = 0; i < number_of_aliases; i++) {
-		printf("dddowow\n");
+
 		if(strcmp(word, array_of_aliases[i].a_name) == 0) {
 			//Variable already exists, set value
 			indexOf = i;

@@ -16,9 +16,14 @@ setenv 					return SETENV;
 on|off					return STATE;
 unalias 				return UNALIAS;
 unsetenv 				return UNSETENV;
+\*              return STAR;
+\?              return QUESTION;
+\$              return DOLLAR;
+\{              return OCURL;
+\}              return ECURL;
+\"                return QUOTE;  
 [0-9a-zA-Z/\.]+  {yylval.str = strdup(yytext); 
-                      return WORD; }
-\"                return QUOTE;                  
+                      return WORD; }                
 \n 			return -1;
 %%
 

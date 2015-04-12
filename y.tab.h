@@ -41,48 +41,56 @@
    enum yytokentype {
      ALIAS = 258,
      BYE = 259,
-     CD = 260,
-     HELLO = 261,
-     LS = 262,
-     NUMBER = 263,
+     HELLO = 260,
+     NUMBER = 261,
+     QUESTION = 262,
+     STAR = 263,
      PRINTENV = 264,
      SETENV = 265,
      STATE = 266,
      UNALIAS = 267,
      UNSETENV = 268,
      QUOTE = 269,
-     WORD = 270,
-     EXPRESSION = 271
+     DOLLAR = 270,
+     OCURL = 271,
+     ECURL = 272,
+     WORD = 273,
+     CD = 274,
+     LS = 275
    };
 #endif
 /* Tokens.  */
 #define ALIAS 258
 #define BYE 259
-#define CD 260
-#define HELLO 261
-#define LS 262
-#define NUMBER 263
+#define HELLO 260
+#define NUMBER 261
+#define QUESTION 262
+#define STAR 263
 #define PRINTENV 264
 #define SETENV 265
 #define STATE 266
 #define UNALIAS 267
 #define UNSETENV 268
 #define QUOTE 269
-#define WORD 270
-#define EXPRESSION 271
+#define DOLLAR 270
+#define OCURL 271
+#define ECURL 272
+#define WORD 273
+#define CD 274
+#define LS 275
 
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 36 "hello.y"
+#line 35 "hello.y"
 {
 	char* str;
 	int num;
 }
 /* Line 1529 of yacc.c.  */
-#line 86 "y.tab.h"
+#line 94 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
