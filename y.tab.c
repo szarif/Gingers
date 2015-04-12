@@ -470,12 +470,12 @@ static const yytype_int8 yyrhs[] =
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
-static const yytype_uint8 yyrline[] =
+static const yytype_uint16 yyrline[] =
 {
        0,    46,    46,    47,    50,    50,    50,    50,    50,    50,
       50,    50,    50,    50,    56,    68,    77,    81,    86,    90,
       94,   109,   117,   122,   128,   133,   141,   147,   151,   158,
-     162,   179,   197,   226,   237,   242,   249
+     162,   179,   199,   239,   250,   255,   262
 };
 #endif
 
@@ -1575,6 +1575,7 @@ yyreduce:
 #line 179 "hello.y"
     {
 		printf("\tI reckon yall wanna list of yall directory \n");
+
 		DIR *directory;
 
 		struct dirent *direct;
@@ -1586,6 +1587,7 @@ yyreduce:
 			while ((direct = readdir(directory)) != NULL) {
 				printf("%s\n", direct->d_name);
 			}
+			
 			closedir(directory);
 	
 		}
@@ -1594,38 +1596,49 @@ yyreduce:
     break;
 
   case 32:
-#line 197 "hello.y"
+#line 199 "hello.y"
     {
 
-			DIR *d;
-			struct dirent *dir;
-			d = opendir(".");
-			int works;
-			const char* strIn = (yyvsp[(2) - (2)].str);
-			int len = strlen(strIn);
+			DIR *direct;
 
-			char* strOut;
-			if(d) {
-				while ((dir = readdir(d)) != NULL) {
-					works = 1;
-					strOut = dir->d_name;
+			struct dirent *dir;
+			
+			direct = opendir(".");
+			
+			int isCorrect;
+			
+			const char* input = (yyvsp[(2) - (2)].str);
+			
+			int len = strlen(input);
+
+			char* output;
+			
+			if(direct) {
+			
+				while ((dir = readdir(direct)) != NULL) {
+
+					isCorrect = 1;
+					output = dir->d_name;
 					int i;
 					for (i = 0; i < len; i++) {
-						if (strIn[i] != strOut[i]) {
-							works = 0;
+						if (input[i] != output[i]) {
+							isCorrect = 0;
 							break;
 						}
 					}
-					if (works == 1)
+			
+					if (isCorrect == 1)
 						printf("%s\n", dir->d_name);
 				}
-				closedir(d);
+			
+				closedir(direct);
 			}
+
 	}
     break;
 
   case 33:
-#line 226 "hello.y"
+#line 239 "hello.y"
     {
 		command = 2;
 		printf("\tPrintenv has been called ");
@@ -1633,14 +1646,14 @@ yyreduce:
     break;
 
   case 34:
-#line 237 "hello.y"
+#line 250 "hello.y"
     {
 		printf("\tA state with number received \n");
 	}
     break;
 
   case 35:
-#line 242 "hello.y"
+#line 255 "hello.y"
     {
 		command = 7;
 		variable = (yyvsp[(2) - (2)].str);
@@ -1649,7 +1662,7 @@ yyreduce:
     break;
 
   case 36:
-#line 249 "hello.y"
+#line 262 "hello.y"
     {
 		command = 3;
 		variable = (yyvsp[(2) - (2)].str);
@@ -1660,7 +1673,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 1664 "y.tab.c"
+#line 1677 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1874,5 +1887,5 @@ yyreturn:
 }
 
 
-#line 267 "hello.y"
+#line 280 "hello.y"
 
