@@ -145,13 +145,13 @@ bye_case:
 
 cd_case:
 	CD{
-		// chdir(getenv("HOME"));
-		// printf("\tWelcome home darlin! \n");
+		chdir(getenv("HOME"));
+		printf("\tWelcome home darlin! \n");
 	};
 	| CD WORD {
 		// printf("ddsds\n");
-		// chdir($2);
-		// printf("\tCD has been called and you have been redirected to the specified directory\n");
+		chdir($2);
+		printf("\tCD has been called and you have been redirected to the specified directory\n");
 	};
 
 hello_case:
@@ -178,43 +178,61 @@ hello_case:
 ls_case:
 	LS{
 		printf("\tI reckon yall wanna list of yall directory \n");
+
 		DIR *directory;
-		struct dirent *dir;
+
+		struct dirent *direct;
+		
 		directory = opendir(".");
+		
 		if(directory) {
-			while ((dir = readdir(directory)) != NULL) {
-				printf("%s\n", dir->d_name);
+
+			while ((direct = readdir(directory)) != NULL) {
+				printf("%s\n", direct->d_name);
 			}
+			
 			closedir(directory);
+	
 		}
 
 	};	
 	| LS WORD {
 
-			DIR *d;
-			struct dirent *dir;
-			d = opendir(".");
-			int works;
-			const char* strIn = $2;
-			int len = strlen(strIn);
+			DIR *direct;
 
-			char* strOut;
-			if(d) {
-				while ((dir = readdir(d)) != NULL) {
-					works = 1;
-					strOut = dir->d_name;
+			struct dirent *dir;
+			
+			direct = opendir(".");
+			
+			int isCorrect;
+			
+			const char* input = $2;
+			
+			int len = strlen(input);
+
+			char* output;
+			
+			if(direct) {
+			
+				while ((dir = readdir(direct)) != NULL) {
+
+					isCorrect = 1;
+					output = dir->d_name;
 					int i;
 					for (i = 0; i < len; i++) {
-						if (strIn[i] != strOut[i]) {
-							works = 0;
+						if (input[i] != output[i]) {
+							isCorrect = 0;
 							break;
 						}
 					}
-					if (works == 1)
+			
+					if (isCorrect == 1)
 						printf("%s\n", dir->d_name);
 				}
-				closedir(d);
+			
+				closedir(direct);
 			}
+
 	};
 
 printenv_case:

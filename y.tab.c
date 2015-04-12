@@ -475,7 +475,7 @@ static const yytype_uint8 yyrline[] =
        0,    46,    46,    47,    50,    50,    50,    50,    50,    50,
       50,    50,    50,    50,    56,    68,    77,    81,    86,    90,
       94,   109,   117,   122,   128,   133,   141,   147,   151,   158,
-     162,   179,   192,   221,   232,   237,   244
+     162,   179,   197,   226,   237,   242,   249
 };
 #endif
 
@@ -1531,8 +1531,8 @@ yyreduce:
   case 27:
 #line 147 "hello.y"
     {
-		// chdir(getenv("HOME"));
-		// printf("\tWelcome home darlin! \n");
+		chdir(getenv("HOME"));
+		printf("\tWelcome home darlin! \n");
 	}
     break;
 
@@ -1540,8 +1540,8 @@ yyreduce:
 #line 151 "hello.y"
     {
 		// printf("ddsds\n");
-		// chdir($2);
-		// printf("\tCD has been called and you have been redirected to the specified directory\n");
+		chdir((yyvsp[(2) - (2)].str));
+		printf("\tCD has been called and you have been redirected to the specified directory\n");
 	}
     break;
 
@@ -1576,20 +1576,25 @@ yyreduce:
     {
 		printf("\tI reckon yall wanna list of yall directory \n");
 		DIR *directory;
-		struct dirent *dir;
+
+		struct dirent *direct;
+		
 		directory = opendir(".");
+		
 		if(directory) {
-			while ((dir = readdir(directory)) != NULL) {
-				printf("%s\n", dir->d_name);
+
+			while ((direct = readdir(directory)) != NULL) {
+				printf("%s\n", direct->d_name);
 			}
 			closedir(directory);
+	
 		}
 
 	}
     break;
 
   case 32:
-#line 192 "hello.y"
+#line 197 "hello.y"
     {
 
 			DIR *d;
@@ -1620,7 +1625,7 @@ yyreduce:
     break;
 
   case 33:
-#line 221 "hello.y"
+#line 226 "hello.y"
     {
 		command = 2;
 		printf("\tPrintenv has been called ");
@@ -1628,14 +1633,14 @@ yyreduce:
     break;
 
   case 34:
-#line 232 "hello.y"
+#line 237 "hello.y"
     {
 		printf("\tA state with number received \n");
 	}
     break;
 
   case 35:
-#line 237 "hello.y"
+#line 242 "hello.y"
     {
 		command = 7;
 		variable = (yyvsp[(2) - (2)].str);
@@ -1644,7 +1649,7 @@ yyreduce:
     break;
 
   case 36:
-#line 244 "hello.y"
+#line 249 "hello.y"
     {
 		command = 3;
 		variable = (yyvsp[(2) - (2)].str);
@@ -1655,7 +1660,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 1659 "y.tab.c"
+#line 1664 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1869,5 +1874,5 @@ yyreturn:
 }
 
 
-#line 262 "hello.y"
+#line 267 "hello.y"
 
