@@ -50,4 +50,3 @@ In order to run the shell.exe executable file:
 - the shell will automatically compile and run
 - use any of the working features listed above
 - use command "bye" to gracefully exit the shell
-- give us as good of a grade as possible so we graduate and don't fail at life
