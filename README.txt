@@ -2,17 +2,6 @@
 Shell term project by Shai Zarif and Damien Gilliams
 ------------------------------------------------------
 
-
-------------------------------------------------------
-Non-working features
-------------------------------------------------------
-We were not successful in implementing the following:
-- Environement Variable Expansion ${variable}
-- Wildcard Matching * ? 
-- Tilde Expansion ~
-- File name completion [ESC]
-
-
 ------------------------------------------------------
 Working features
 ------------------------------------------------------
